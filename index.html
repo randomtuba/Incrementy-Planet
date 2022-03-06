@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Incrementy Planet</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/game.js" defer></script>
+    <script src="/save.js" defer></script>
+    <script src="/break_eternity.js" defer></script>
+    <script src="/format.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="normal/buyables.js" defer></script>
+    <script src="normal/manifolds.js" defer></script>
+    <script src="normal/upgrades.js" defer></script>
+  </head>
+  <body>
+    <div id="app">
+    <div style="color:yellow">Current Endgame: 1e1000 incrementy</div><br>
+    <button id="tab1" class="tab" onclick="tab('main')">Main</button>
+    <button id="tab2" class="tab" onclick="tab('options')">Options</button>
+    <button id="tab3" class="tab" onclick="tab('stats')">Stats</button>
+    <button id="tab5" class="tab" onclick="tab('upgrades')" v-if="player.incrementy.gte(1e135) || hasUpgrade(1)">Upgrades</button>
+    <br><br>
+    <div id="tab1display" v-if="player.currentTab == 'main'">
+      You have <b class="incrementy">{{format(player.incrementy)}}</b> incrementy.<br>You are gaining <span class="incrementy">{{format(gain())}}</span> incrementy per second.<br>
+      <b style="color:red;" v-if="player.incrementy.gte(1e100)">Incrementy gain is (softcapped) past 1e100 incrementy</b>
+      <br><br>
+      <button id="buyMax" class="basicButton2" onclick="buyMax()" v-if="player.manifoldAmt.gte(1) || player.galaxyAmt.gte(1)">Buy Max</button><br>
+      
+      <table>
+        
+      <td v-for="a in 4">
+      <button class="buyable" @click="buybuyable(a)" v-if="BUYABLE[a].unl()">
+        <b style="color: black; background-color: white;">{{BUYABLE[a].title}}</b><br> 
+        {{BUYABLE[a].desc}}<br>
+        Amount: {{player.buyables[a]}}{{player.buyables[4].gte(1) && new Decimal(a).lt(4) ? ' + ' + format(BUYABLE[4].eff()) : ''}}<br>
+        Cost: {{format(BUYABLE[a].cost())}} incrementy<br>
+        Currently: {{BUYABLE[a].effectDisplay()}}
+        </button>
+        </td>
+      </table>
+      <br>
+      <table><td>
+      <button class="manifold" @click="buyManifold()" v-if="player.incrementy.gte(1e60)||player.manifoldAmt.gte(1)||player.galaxyAmt.gte(1)">
+        <b style="color: blue; background-color: black;">Manifolds</b><br> 
+        Reset everything for a manifold.<br>
+        Amount: {{player.manifoldAmt}}<br>
+        Cost: {{format(manifoldcost())}} incrementy<br>
+        Currently: {{format(manifoldeff())}}x production
+      </button></td><td>
+      <button class="galaxy" @click="buyGalaxy()" v-if="galaxy.unl()">
+        <b style="color: magenta; background-color: black;">{{galaxy.title}}</b><br> 
+        {{galaxy.desc}}<br>
+        Amount: {{player.galaxyAmt}}<br>
+        Cost: {{format(galaxy.cost())}} manifolds<br>
+        Currently: {{galaxy.effectDisplay()}}
+      </button>
+      </td></table>
+    </div>
+    <div id="tab2display" v-if="player.currentTab == 'options'">
+      <table><tr><td>
+      <button class="basicButton" onclick="save()">
+        Save
+      </button>
+      </td><td>
+      <button class="basicButton" onclick="exportSave()">
+        Export
+      </button>
+      </td><td>
+      <button class="basicButton" onclick="importSave()">
+        Import
+      </button>
+      </td><td>
+      <button id="hardReset" onclick="hardReset()">
+        HARD RESET
+      </button>
+      </td></tr></table><br><br>
+      <span>You are currently playing <b>Version A</b></span><br>
+      <span>Game made by randomtuba and FactorXXX (otherwise known as 3^3=7)</span>
+    </div>
+    <div id="tab3display" v-if="player.currentTab == 'stats'">
+      You have produced {{format(player.total)}} incrementy in total.<br>
+      You have played this game for {{formatTime(player.timePlayed)}}.<br>
+      You have {{format(player.buyables[1].add(player.buyables[2]).add(player.buyables[3]).add(player.buyables[4]))}} buyables (not including free levels).
+    </div>
+    <div id="tab5display" v-if="player.currentTab == 'upgrades'">
+      <table>
+      
+      <td :class="{upgradeLocked:player.incrementy.lt(UPGRADE[a].cost),upgradeBuyable:player.incrementy.gte(UPGRADE[a].cost),upgradeBought:player.upgrades[a]==1}" v-for="a in 5" @click="buyUpgrade(a)">     
+        <b :class="{upgradeLocked:player.incrementy.lt(UPGRADE[a].cost),upgradeBuyable:player.incrementy.gte(UPGRADE[a].cost),upgradeBought:player.upgrades[a]==1}">{{UPGRADE[a].title}}</b><br> 
+        {{UPGRADE[a].desc}}<br>
+        Cost: {{format(UPGRADE[a].cost())}} incrementy<br>
+        {{UPGRADE[a].eff != null ? 'Currently: ' + UPGRADE[a].effectDisplay() : ''}}<br>
+
+        </td>
+        
+      </table><br>
+    </div>
+      
+    </div>
+  </body>
+</html>

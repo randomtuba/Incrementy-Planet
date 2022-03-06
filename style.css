@@ -1,0 +1,102 @@
+*{
+  background-color:black;
+  color:white;
+  border-radius: 5px;
+  font-family: 'Verdana', sans-serif;
+}
+
+.tab {
+  font-size: 20px;
+  background-color: #EF12FF;
+  color: black;
+  border-color: white;
+}
+
+.buyable {
+  color: black;
+  border-color: white;
+  background-color: white;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+
+.manifold {
+  color: blue;
+  border-color: blue;
+  background-color: black;
+  width: 280px;
+  height: 150px;
+  font-size:12px;
+  text-align: center;
+}
+
+.galaxy {
+  color: magenta;
+  border-color: magenta;
+  background-color: black;
+  width: 280px;
+  height: 150px;
+  font-size:10px;
+  text-align: center;
+}
+
+.basicButton {
+  color: black;
+  border-color: white;
+  background-color: white;
+  width:100px;
+  height:100px;
+}
+
+.basicButton2 {
+  color: black;
+  border-color: white;
+  background-color: white;
+  width: 100px;
+  height: 75px;
+}
+
+#hardReset {
+  color: white;
+  border-color: red;
+  background-color: red;
+  width:100px;
+  height:100px;
+}
+
+.incrementy {
+  color: magenta;
+  text-shadow: 0px 0px 5px magenta;
+}
+
+.upgradeLocked {
+  color: black;
+  border-color: red;
+  background-color: gray;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+
+.upgradeBuyable {
+  color: white;
+  border-color: red;
+  background-color: red;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+
+.upgradeBought {
+  color: green;
+  border-color: green;
+  background-color: lime;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
