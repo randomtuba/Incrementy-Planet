@@ -5,11 +5,42 @@
   font-family: 'Verdana', sans-serif;
 }
 
+#game {
+  border: 2px solid white;
+  padding: 2px;
+  width: 75%;
+  overflow: hidden;
+  margin: auto;
+  text-align: left;
+}
+
 .tab {
   font-size: 20px;
   background-color: #EF12FF;
   color: black;
   border-color: white;
+}
+
+.overflowTab {
+  font-size: 20px;
+  background-color: #90FF6E;
+  color: green;
+  border-color: green;
+}
+
+.researchTab {
+  font-size: 20px;
+  background-color: #03A1FC;
+  color: blue;
+  border-color: blue;
+}
+
+.overflowPrestige {
+  background-color: #90FF6E;
+  color: green;
+  border-color: #90FF6E;
+  width: 180px;
+  height: 80px;
 }
 
 .buyable {
@@ -74,7 +105,7 @@
 .upgradeLocked {
   color: black;
   border-color: red;
-  background-color: gray;
+  background-color: #FF7F7F;
   width: 320px;
   height: 160px;
   font-size:12px;
@@ -97,6 +128,83 @@
   background-color: lime;
   width: 320px;
   height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+
+.ach{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: #888888;      
+}
+.achdone{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: #008800;      
+}
+
+.autobuyer{
+  width: 280px;
+  height: 120px;
+  text-align: center;
+  background-color: #880088;      
+}
+.autobuyerturn{
+  width: 280px;
+  height: 30px;
+  text-align: center;
+  background-color: #440044;      
+}
+
+.autobuyerturn2 {
+  text-align: center;
+  background-color: #440044;
+}
+
+.ouBuyable {
+  color: black;
+  border-color: lime;
+  background-color: lime;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+.ouBought {
+  color: green;
+  border-color: green;
+  background-color: #90FF6E;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+.research {
+  color: white;
+  border-color: #884444;
+  background-color: #804040;
+  width: 240px;
+  height: 150px;
+  font-size:12px;
+  text-align: center;
+}
+.research2 {
+  color: white;
+  border-color: #ff8888;
+  background-color: #f08080;
+  width: 240px;
+  height: 150px;
+  font-size:12px;
+  text-align: center;
+}
+.research3 {
+  color: black;
+  border-color: #88ff88;
+  background-color: #80f080;
+  width: 240px;
+  height: 150px;
   font-size:12px;
   text-align: center;
 }
