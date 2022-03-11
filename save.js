@@ -37,7 +37,7 @@ function start() {
     researchnum: null,
     knowledge: new Decimal(0),
     time: Date.now(),
-    inputVal: new Decimal(0),
+    inputVal: 100000000,
   };
   return a;
 }

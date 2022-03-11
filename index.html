@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Incrementy Planet</title>
     <link rel="stylesheet" href="/style.css" />
-    <script src="/game.js" ></script>
-    <script src="/save.js" defer></script>
-    <script src="/break_eternity.js" defer></script>
-    <script src="/format.js" defer></script>
-    <script src="/achievement.js"></script>
-    <script src="/news.js" defer></script>
+    <script src="game.js" ></script>
+    <script src="save.js" defer></script>
+    <script src="break_eternity.js" defer></script>
+    <script src="format.js" defer></script>
+    <script src="achievement.js"></script>
+    <script src="news.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12" defer></script>
     <script src="normal/buyables.js" defer></script>
     <script src="normal/manifolds.js" defer></script>
@@ -108,7 +108,7 @@
     <div id="tab5display" v-if="player.currentTab == 'upgrades'">
       <span>You have {{format(player.incrementy)}} incrementy</span>
       <table>
-      <tr v-for="b in rowAmt()">
+      <tr v-for="b in 2">
       <td :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}" v-for="a in 5" @click="buyUpgrade(b*5-5+a)">     
       <b  :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}">{{UPGRADE[b*5-5+a].title}}</b><br> <!---  !--->
         {{UPGRADE[b*5-5+a].desc}}<br>
