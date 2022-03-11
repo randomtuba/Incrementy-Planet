@@ -1,9 +1,10 @@
 function manifoldcost() {
   let exp = new Decimal(1.5);
-  if (player.manifoldAmt.gte(15))
-    exp = exp.add(new Decimal(0.025).times(player.manifoldAmt.sub(14)));
+  if (player.manifoldAmt.gte(15))exp = exp.add(new Decimal(0.025).times(player.manifoldAmt.sub(14)));
+  let cost= new Decimal(1)
+  if(hasResearch(7)) cost=cost.times(0.9)
   return new Decimal(1e70).mul(
-    new Decimal(1e10).pow(player.manifoldAmt.pow(exp))
+    new Decimal(1e10).pow(player.manifoldAmt.times(cost).pow(exp))
   );
 }
 function manifoldeff() {
@@ -14,7 +15,7 @@ function manifoldeff() {
 function buyManifold() {
   if (player.incrementy.gte(manifoldcost())) {
     if(!hasOU(6)){
-    player.incrementy = new Decimal(10);
+    player.incrementy = hasAch(16) ? new Decimal(2e6) : new Decimal(10);
     player.buyables = [
       null,
       new Decimal(0),
@@ -58,7 +59,7 @@ const galaxy = {
 function buyGalaxy() {
   if (player.manifoldAmt.gte(galaxy.cost())) {
     if(!hasOU(5)){
-    player.incrementy = new Decimal(10);
+    player.incrementy = hasAch(16) ? new Decimal(2e6) : new Decimal(10);
     player.buyables = [
       null,
       new Decimal(0),

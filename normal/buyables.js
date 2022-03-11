@@ -49,7 +49,7 @@ const BUYABLE = {
       );
     },
     eff() {
-      return new Decimal(0.8).mul(player.buyables[3].add(BUYABLE[4].eff()));
+      return new Decimal(0.8).add(hasResearch(6)?0.35:0).mul(player.buyables[3].add(BUYABLE[4].eff()));
     },
     effectDisplay() {
       return "+" + format(BUYABLE[3].eff()) + " Incrementy Booster base";
@@ -68,8 +68,8 @@ const BUYABLE = {
     },
     eff() {
       let base = new Decimal(1);
-      if (hasUpgrade(5)) base = base.add(0.4);
-
+      if (hasUpgrade(5)) base = new Decimal(1.4)
+if (hasResearch(2)) base = new Decimal(3.2)
       return base.times(player.buyables[4]);
     },
     effectDisplay() {
