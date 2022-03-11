@@ -108,7 +108,7 @@
     <div id="tab5display" v-if="player.currentTab == 'upgrades'">
       <span>You have {{format(player.incrementy)}} incrementy</span>
       <table>
-      <tr v-for="b in 2">
+      <tr v-for="b in rowAmt()">
       <td :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}" v-for="a in 5" @click="buyUpgrade(b*5-5+a)">     
       <b  :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}">{{UPGRADE[b*5-5+a].title}}</b><br> <!---  !--->
         {{UPGRADE[b*5-5+a].desc}}<br>
