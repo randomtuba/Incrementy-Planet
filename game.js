@@ -35,10 +35,10 @@ function mainLoop(){
   player.total = player.total.add(hasAch(18) ? gain().times(diff) : gain().times(diff).min("1e1000"));
   if(!hasAch(18)) player.incrementy = player.incrementy.min("1e1000");
   if(player.currentTab == 'overflow'){
-    if(!document.getElementById("theInput").value==""){
+    if(!document.getElementById("theInput")?.value==""){
     player.inputVal = document.getElementById("theInput").value
     }
-    if(document.getElementById("theInput").value==""&&(player.inputVal==null)==false){
+    if(document.getElementById("theInput")?.value==""&&(player.inputVal==null)==false){
     document.getElementById("theInput").value = player.inputVal
   }
   }
