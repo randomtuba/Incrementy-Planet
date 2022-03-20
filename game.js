@@ -42,7 +42,6 @@ function mainLoop(){
     document.getElementById("theInput").value = player.inputVal
   }
   }
-  //fixed!!!!!
   player.timePlayed = player.timePlayed += diff;
   player.overflowTimes[0] = player.overflowTimes[0] += diff;
   player.blackhole = player.blackhole.add(blackholegain().times(diff));
@@ -54,6 +53,9 @@ function mainLoop(){
        player.knowledge=new Decimal(0)
     }
   }
+  
+  if(hasResearch(12)) player.replicanti=player.replicanti.times(player.replicanti.gte("1.797e308") ? REPLICANTI_BUYABLE[1].eff().pow(new Decimal(1).div(REPLICANTI_BUYABLE[2].eff())).pow(new Decimal(1).sub(player.replicanti.add(1).log10().sub(308).div(500))).pow(diff) : REPLICANTI_BUYABLE[1].eff().pow(new Decimal(1).div(REPLICANTI_BUYABLE[2].eff())).pow(diff))
+  player.replicanti = player.replicanti.min("1e1000");
 }
 
 setInterval(mainLoop, 40);

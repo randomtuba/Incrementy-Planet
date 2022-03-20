@@ -89,13 +89,20 @@ function updateNewsArray() {
     ["Incrementy Planet? More like Console ERROR incremental", true, "a31"],
     ["Hey all, Scott here! My thoughts are being broadcasted on a news ticker now! No reason, just felt like it.", true, "a32"],
     ["Everyone's talking about Incrementy VS Replicanti, but what about Replicants and Duplicators?", true, "a33"],
-    ["AAREX ADD BATTLE REPLICANTIS OR I WILL FLATTEN YOU'RE CAR TIRES", true, "a34"],
+    ["AAREX ADD BATTLE REPLICANTS OR I WILL FLATTEN YOU'RE CAR TIRES", true, "a34"],
     ["this ticker is d", true, "a35"],
     ["never gonna give you up...", true, "a36"],
     ["...never gonna let you down", true, "a37"],
     ["Research is timewall gaming", hasOU(8), "a38"],
     ["where is the newsticker planet", true, "a39"],
     ["Hello everyone, this is YOUR daily dose of incrementy. Here we have a-oh wait, the universe collapsed, hold on", player.totalSing.gte(1), "a40"],
+    // Update B3 news tickers (6 total)
+    ["Why are you playing this game? It's just a meaningless number going up with no implications on reality.",true,"a41"],
+    ["Please nerf Incrementy Generators, they produce ALL of the incrementy",true,"a42"],
+    ["'why are you @unpogged 77 centimeters tal?? 1047 pixels ( add this to incement plant news )' -DEMEMZEA",true,"a43"],
+    ["go solve today's wordle if you haven't already",true,"a44"],
+    ["eee169? Those are rookie numbers. f_psi(W_2^2)(549)? That's what I'm talking about!",true,"a45"],
+    ["In the land of incrementy, we are not judged. Here we are peaceful. Here we are free.",true,"a46"],
   ]
 }
 var s;

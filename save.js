@@ -37,7 +37,11 @@ function start() {
     researchnum: null,
     knowledge: new Decimal(0),
     time: Date.now(),
-    inputVal: 100000000,
+    inputVal: new Decimal(0),
+    replicanti: new Decimal(1),
+    repliBuyables: [null, new Decimal(0), new Decimal(0), new Decimal(0)],
+    repliGalaxies: new Decimal(0),
+    singDoubler: new Decimal(0),
   };
   return a;
 }

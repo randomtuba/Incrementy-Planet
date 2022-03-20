@@ -35,6 +35,13 @@
   border-color: blue;
 }
 
+.replicantiTab {
+  font-size: 20px;
+  background-color: orange;
+  color: brown;
+  border-color: brown;
+}
+
 .overflowPrestige {
   background-color: #90FF6E;
   color: green;
@@ -47,6 +54,16 @@
   color: black;
   border-color: white;
   background-color: white;
+  width: 320px;
+  height: 160px;
+  font-size:12px;
+  text-align: center;
+}
+
+.repliBuyable {
+  color: brown;
+  border-color: brown;
+  background-color: orange;
   width: 320px;
   height: 160px;
   font-size:12px;
@@ -66,6 +83,16 @@
 .galaxy {
   color: magenta;
   border-color: magenta;
+  background-color: black;
+  width: 280px;
+  height: 150px;
+  font-size:10px;
+  text-align: center;
+}
+
+.repliGalaxy {
+  color: orange;
+  border-color: orange;
   background-color: black;
   width: 280px;
   height: 150px;
@@ -100,6 +127,11 @@
 .incrementy {
   color: magenta;
   text-shadow: 0px 0px 5px magenta;
+}
+
+.replicanti {
+  color: orange;
+  text-shadow: 0px 0px 5px orange;
 }
 
 .upgradeLocked {
@@ -163,6 +195,45 @@
   background-color: #440044;
 }
 
+.singDoubler {
+  background-color: black;
+  width: 240px;
+  height: 150px;
+  font-size:12px;
+  text-align: center;
+  animation: colorRotate 6s linear 0s infinite;
+}
+
+@keyframes colorRotate {
+  0% {
+    border-color: red;
+  }
+  15% {
+    border-color: orange;
+  }
+  25% {
+    border-color: yellow;
+  }
+  40% {
+    border-color: lime;
+  }
+  55% {
+    border-color: cyan;
+  }
+  70% {
+    border-color: blue;
+  }
+  80% {
+    border-color: purple;
+  }
+  90% {
+    border-color: magenta;
+  }
+  100% {
+    border-color: red;
+  }
+}
+
 .ouBuyable {
   color: black;
   border-color: lime;
@@ -206,5 +277,9 @@
   width: 240px;
   height: 150px;
   font-size:12px;
+  text-align: center;
+}
+
+.verticalCenter {
   text-align: center;
 }

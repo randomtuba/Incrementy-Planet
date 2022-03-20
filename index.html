@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Incrementy Planet</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/style.css" />
     <script src="game.js" ></script>
     <script src="save.js" defer></script>
     <script src="break_eternity.js" defer></script>
@@ -17,22 +17,24 @@
     <script src="normal/upgrades.js" defer></script>
     <script src="overflow/overflow.js" defer></script>
     <script src="overflow/autobuyer.js"></script>
-        <script src="overflow/research.js" defer></script>
+    <script src="overflow/research.js" defer></script>
+    <script src="overflow/replicanti.js" defer></script>
   </head>
   <body>
     <div id="app">
     <div id="game">
       <div id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s; white-space: nowrap"><b>Enter the E</b></div>
     </div>
-    <div style="color:yellow">Current Endgame: 1e6020 incrementy and all upgrades bought</div><br>
-      <button class="overflowPrestige" v-if="hasAch(18)" onclick="manualOverflow()">Overflow the universe for <b class="overflowPrestige">{{singFormula()}}</b> singularities</button><br><br>
+    <div style="color:yellow">Current Endgame: 1e24,000 incrementy and 1e17 singularities</div><br>
+      <button class="overflowPrestige" v-if="hasAch(18)" onclick="manualOverflow()">Overflow the universe for <b class="overflowPrestige">{{format(singFormula())}}</b> singularities</button><br><br>
     <button id="tab1" class="tab" onclick="tab('main')">Main</button>
     <button id="tab2" class="tab" onclick="tab('options')">Options</button>
     <button id="tab3" class="tab" onclick="tab('stats')">Stats</button>
       <button id="tab4" class="tab" onclick="tab('achievements')">Achievements</button>
     <button id="tab5" class="tab" onclick="tab('upgrades')" v-if="player.incrementy.gte(1e135) || hasUpgrade(1) || player.totalSing.gte(1)">Upgrades</button>
       <button id="tab6" class="overflowTab" onclick="tab('overflow')" v-if="player.totalSing.gte(1) ">Overflow</button>
-      <button id="tab7" class="researchTab" onclick="tab('research')" v-if=" hasOU(8)">Research</button><br><br>
+      <button id="tab7" class="researchTab" onclick="tab('research')" v-if=" hasOU(8)">Research</button>
+      <button id="tab8" class="replicantiTab" onclick="tab('replicanti')" v-if=" hasResearch(12)">Replicanti</button><br><br>
     <div id="tab1display" v-if="player.currentTab == 'main'">
       You have <b class="incrementy">{{format(player.incrementy)}}</b> incrementy.<br>You are gaining <span class="incrementy">{{format(gain())}}</span> incrementy per second.<br>
       <b style="color:red;" v-if="player.incrementy.gte(1e100)">Incrementy gain is (softcapped) past 1e100 incrementy</b>
@@ -88,7 +90,7 @@
       </button>
       </td></tr></table><br><br>
       Hotkeys: 1-4 for each buyable{{player.manifoldAmt.gte(1) || player.galaxyAmt.gte(1) || player.totalSing.gte(1) ? ', B to buy max, M to buy manifold' : ''}}{{player.galaxyAmt.gte(1) || player.totalSing.gte(1) ? ', G to buy Incrementy Galaxy' : ''}}{{player.totalSing.gte(1) ? ', O to overflow' : ''}}<br>
-      <span>You are currently playing <b>Version B2</b></span><br>
+      <span>You are currently playing <b>Version B3</b></span><br>
       <span>Game made by randomtuba, FactorXXX (otherwise known as 3^3=7), and gapples2</span><br>
       (credits to FactorXXX for coding some of the mechanics, and thanks to gapples2 for offline progress and code refactoring)<br><br>
       <a href="https://discord.gg/VxHzjtgdA4" style="color: blue;">Discord</a>
@@ -110,7 +112,7 @@
       <table>
       <tr v-for="b in rowAmt()">
       <td :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}" v-for="a in 5" @click="buyUpgrade(b*5-5+a)">     
-      <b  :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}">{{UPGRADE[b*5-5+a].title}}</b><br> <!---  !--->
+      <b  :class="{upgradeLocked:player.incrementy.lt(UPGRADE[b*5-5+a].cost()) && !hasUpgrade(b*5-5+a),upgradeBuyable:player.incrementy.gte(UPGRADE[b*5-5+a].cost())&&!hasUpgrade(b*5-5+a),upgradeBought:hasUpgrade(b*5-5+a)}">{{UPGRADE[b*5-5+a].title}}</b><br>
         {{UPGRADE[b*5-5+a].desc}}<br>
         Cost: {{format(UPGRADE[b*5-5+a].cost())}} incrementy<br>
         {{UPGRADE[b*5-5+a].effectDisplay != null ? 'Currently: ' + UPGRADE[b*5-5+a].effectDisplay() : ''}}<br>
@@ -119,9 +121,9 @@
         </tr>
       </table><br>
     </div>
-      <div id="tab4display" v-if="player.currentTab == 'achievements'">Hover over an achievement to view its description!<br>
+      <div id="tab4display" v-if="player.currentTab == 'achievements'">You have {{player.ach.length}}/30 achievements ({{new Decimal(player.ach.length).div(30).mul(10000).round().div(100)}}%)<br>Hover over an achievement to view its description!<br>
       <table>
-        <tr  v-for="a in 4">
+        <tr  v-for="a in 5">
         <td :class="{achdone:hasAch(a*6-6+b),ach:true}" v-for="b in 6" @mouseover="achtext(a*6-6+b)">
           {{a}}{{b}}
         </td>
@@ -131,7 +133,7 @@
         {{tmp.achtext}}
       </div>
       <div id="tab6display" v-if="player.currentTab == 'overflow'">
-        You have {{player.singularities}} singularities. (total: {{player.totalSing}}) Your singularities are generating {{format(blackholegain())}} black hole mass per second.<br>
+        You have {{format(player.singularities)}} singularities. (total: {{format(player.totalSing)}}) Your singularities are generating {{format(blackholegain())}} black hole mass per second.<br>
         You have {{format(player.blackhole)}} black hole mass, multiplying incrementy gain by {{format(blackholeeff())}}
         <br><br>
         <table>
@@ -150,16 +152,24 @@
         </table><br v-if="hasOU(8)">
         <div v-if="hasOU(8)">Automatic Overflow: Reset at <input id="theInput" size="5"> singularities  <button class="autobuyerturn2" @click="turnautobuyer(7)" id="aoToggle">{{player.autobuyeron[7] ? "ON" : "OFF"}}</button></div><br v-if="hasOU(8)"><br v-if="hasOU(8)">
         <table>
-      <tr v-for="a in 2">
+      <tr v-for="a in singRowAmt()">
       <td :class="{upgradeLocked:player.singularities.lt(OVERFLOW_UPGRADE[a*4-4+b].cost()) && !hasOU(a*4-4+b),ouBuyable:player.singularities.gte(OVERFLOW_UPGRADE[a*4-4+b].cost())&&!hasOU(a*4-4+b),ouBought:hasOU(a*4-4+b)}" v-for="b in 4" @click="buyOU(a*4-4+b)">     
       <b  :class="{upgradeLocked:player.singularities.lt(OVERFLOW_UPGRADE[a*4-4+b].cost()) && !hasOU(a*4-4+b),ouBuyable:player.singularities.gte(OVERFLOW_UPGRADE[a*4-4+b].cost())&&!hasOU(a*4-4+b),ouBought:hasOU(a*4-4+b)}">{{OVERFLOW_UPGRADE[a*4-4+b].title}}</b><br> 
         {{OVERFLOW_UPGRADE[a*4-4+b].desc}}<br>
         Cost: {{format(OVERFLOW_UPGRADE[a*4-4+b].cost())}} Singularities<br>
         {{OVERFLOW_UPGRADE[a*4-4+b].eff != null ? 'Currently: ' + OVERFLOW_UPGRADE[a*4-4+b].effectDisplay() : ''}}<br>
-       
         </td>
       </tr>
       </table><br>
+      <div class="verticalCenter">
+      <button class="singDoubler" v-if="hasAch(24)" onclick="buyDoubler()">
+        <b>Singularity Doubler</b><br>
+        Double your singularities for every time this is bought!<br>
+        Amount: {{format(player.singDoubler)}}<br>
+        Cost: {{format(new Decimal(100000).mul(new Decimal(10).pow(player.singDoubler)))}}<br>
+        Effect: {{format(new Decimal(2).pow(player.singDoubler))}}x singularity gain
+      </button>
+      </div>
       </div>
       <div id="tab7display" v-if="player.currentTab == 'research'">
         You have {{format(player.knowledge)}} knowledge capsules. ({{format(knowledgegain())}}/sec)<br><br>
@@ -182,6 +192,28 @@
           </tr>
         </table>
       </div>
+      <div id="tab8display" v-if="player.currentTab == 'replicanti'">
+      You have <b class="replicanti">{{format(player.replicanti)}}</b> replicanti, multiplying blass hole mass gain by {{format(replicantiEff())}}.<br>Your replicanti are multiplying by <span class="replicanti">{{player.replicanti.gte("1.797e308") ? format(REPLICANTI_BUYABLE[1].eff().pow(new Decimal(1).div(REPLICANTI_BUYABLE[2].eff())).pow(new Decimal(1).sub(player.replicanti.add(1).log10().sub(308).div(500)))) : format(REPLICANTI_BUYABLE[1].eff().pow(new Decimal(1).div(REPLICANTI_BUYABLE[2].eff())))}}x</span> per second.<br>Past 1.797e308 replicanti, replicanti gain starts slowing down.<br>
+    <table>
+    <td v-for="a in 3">
+      <button class="repliBuyable" @click="buyRepliBuyable(a)">
+        <b style="color: brown; background-color: orange;">{{REPLICANTI_BUYABLE[a].title}}</b><br> 
+        {{REPLICANTI_BUYABLE[a].desc}}<br>
+        Amount: {{player.repliBuyables[a]}}<br>
+        Cost: {{format(REPLICANTI_BUYABLE[a].cost())}} singularities<br>
+        Currently: {{REPLICANTI_BUYABLE[a].effectDisplay()}}
+        <div style="color: brown; background-color: orange;" v-if="a == 2">(Note that the tick interval is fake and your replicanti amount is updated 25 times per second)</div>
+        </button>
+        </td>
+    </table><br>
+    <button class="repliGalaxy" @click="buyRepliGalaxy()">
+        <b style="color: orange; background-color: black;">{{replicanti_galaxy.title}}</b><br> 
+        {{replicanti_galaxy.desc}}<br>
+        Amount: {{player.repliGalaxies}}<br>
+        Requires: 1.797e308 replicanti<br>
+        Currently: {{replicanti_galaxy.effectDisplay()}}
+      </button>
+    </div>
     </div>
   </body>
 </html>

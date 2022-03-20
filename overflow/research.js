@@ -73,8 +73,8 @@ const RESEARCH={
   },
   12:{
     title:"New Mechanic???",
-    desc:"Unlock Replicanti. [in Update B3!]",
-    req(){return player.knowledge.gte(8e6)},
+    desc:"Unlock Replicanti and 4 new singularity upgrades.",
+    req(){return player.knowledge.gte(2e8)},
     reqdesc:"2e8 knowledge capsules",
   },
 }

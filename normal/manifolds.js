@@ -2,14 +2,15 @@ function manifoldcost() {
   let exp = new Decimal(1.5);
   if (player.manifoldAmt.gte(15))exp = exp.add(new Decimal(0.025).times(player.manifoldAmt.sub(14)));
   let cost= new Decimal(1)
-  if(hasResearch(7)) cost=cost.times(0.9)
+  if(hasResearch(7)) cost=cost.sub(0.1)
+  if(hasOU(9)) cost=cost.sub(0.1)
   return new Decimal(1e70).mul(
     new Decimal(1e10).pow(player.manifoldAmt.times(cost).pow(exp))
   );
 }
 function manifoldeff() {
   return new Decimal(10).pow(
-    player.manifoldAmt.pow(new Decimal(2).add(galaxy.eff2()))
+    player.manifoldAmt.pow(new Decimal(2).add(galaxy.eff2()).add(replicanti_galaxy.eff()))
   );
 }
 function buyManifold() {

@@ -27,6 +27,9 @@ function singFormula(){
   let gain=player.incrementy.log("1e1000").pow(2)
   if(hasResearch(11)) gain = player.incrementy.div("1e1000").pow(0.0005)
   if(hasUpgrade(7)) gain=gain.times(3)
+  if(hasOU(10)) gain=gain.times(OVERFLOW_UPGRADE[10].eff())
+  gain=gain.times(new Decimal(2).pow(player.singDoubler))
+  if(gain.gte(1e15)) gain=gain.pow(0.4).mul(1e9)
   return gain.floor()
 }
 function manualOverflow() {
@@ -53,6 +56,7 @@ function manualOverflow() {
 function blackholegain() {
   let gain = player.totalSing.pow(2);
   if(hasUpgrade(8)) gain = gain.mul(UPGRADE[8].eff())
+  if(hasResearch(12)) gain=gain.mul(replicantiEff())
   return gain
 }
 function blackholeeff() {
@@ -136,6 +140,40 @@ const OVERFLOW_UPGRADE = {
       return new Decimal("200");
     },
   },
+  9: {
+    title: "Thinning Layers II",
+    desc: "Manifolds are 10% cheaper, again.",
+    cost() {
+      return new Decimal("50000");
+    },
+  },
+  10: {
+    title: "Replicated Singularities",
+    desc: "Gain more singularities based on replicanti.",
+    cost() {
+      return new Decimal("400000");
+    },
+    eff() {
+      return player.replicanti.pow(0.002).add(1);
+    },
+    effectDisplay() {
+      return format(OVERFLOW_UPGRADE[10].eff()) + "x singularity gain";
+    },
+  },
+  11: {
+    title: "Replicanti Overhaul",
+    desc: "Make the multiplier to black hole mass from replicanti more effective, AND greatly increase the effectiveness of Replication Augmentors.",
+    cost() {
+      return new Decimal("1e7");
+    },
+  },
+  12: {
+    title: "???",
+    desc: "TBD",
+    cost() {
+      return new Decimal("1e3008");
+    },
+  },
 };
 
 function buyOU(a) {
@@ -146,4 +184,18 @@ function buyOU(a) {
 }
 function hasOU(x) {
   return player.upgradesoverflow.includes(x);
+}
+
+function singRowAmt(){
+  let row=2
+  if(hasResearch(12))row++
+  return row
+}
+
+function buyDoubler(){
+  if (player.singularities.gte(new Decimal(100000).mul(new Decimal(10).pow(player.singDoubler)))) {
+    player.singularities = player.singularities.sub(new Decimal(100000).mul(new Decimal(10).pow(player.singDoubler)));
+    player.singDoubler = player.singDoubler.add(1);
+    if(player.singularities.lt(1e15)) document.getElementById("theInput").value = document.getElementById("theInput").value*2
+  }
 }

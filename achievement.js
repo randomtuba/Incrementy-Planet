@@ -193,10 +193,52 @@ const ACHIEVEMENT = {
       return player.knowledge.gte(1e7);
     },
   },
+  25: {
+    title: "NEW UPGRADES???",
+    desc: "Unlock new incrementy upgrades.",
+    req() {
+      return hasResearch(10);
+    },
+  },
+  26: {
+    title: "Galactic Expansion",
+    desc: "Buy 4 Incrementy Galaxies.",
+    req() {
+      return player.galaxyAmt.gte(4);
+    },
+  },
+  27: {
+    title: "Exponential growth",
+    desc: "Unlock Replicanti.",
+    req() {
+      return hasResearch(12);
+    },
+  },
+  28: {
+    title: "Is this safe?",
+    desc: "Reach 1e600 replicanti.",
+    req() {
+      return player.replicanti.gte("1e600");
+    },
+  },
+  29: {
+    title: "An impostor among us",
+    desc: "Buy a Replicanti Galaxy.",
+    req() {
+      return player.repliGalaxies.gte(1);
+    },
+  },
+  30: {
+    title: "ngl those singularities looking kinda thicc",
+    desc: "Reach 1 million unspent singularities. (Reward: Unlock the Singularity Doubler.)",
+    req() {
+      return player.singularities.gte(1e6);
+    },
+  },
 };
 
 function checkForAchs(){
-  for (let a = 1; a <= 24; a++) {
+  for (let a = 1; a <= 30; a++) {
     if (ACHIEVEMENT[a].req() && !hasAch(a)) player.ach.push(a);
   }
 }
